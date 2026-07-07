@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: secure-access-api
+  datasource:
+    url: jdbc:postgresql://localhost:5433/securedb
+    username: secure
+    password: secure
+  jpa:
+    hibernate:
+      ddl-auto: update
+    open-in-view: false
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
