@@ -1,11 +1,14 @@
 package com.example.secureaccessapi.entity;
 
+import java.util.List;
+
 import com.example.secureaccessapi.enums.Role;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -33,4 +36,7 @@ public class User extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private Role role = Role.USER;
+	
+	@OneToMany
+	private List<UserConsent> consents;
 }
