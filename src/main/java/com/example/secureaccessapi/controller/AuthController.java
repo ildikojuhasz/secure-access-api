@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.secureaccessapi.dto.request.LoginRequest;
 import com.example.secureaccessapi.dto.request.RegisterRequest;
+import com.example.secureaccessapi.dto.response.LoginResponse;
 import com.example.secureaccessapi.dto.response.RegisterResponse;
 import com.example.secureaccessapi.service.AuthService;
 
@@ -27,5 +29,11 @@ public class AuthController {
 	@Operation(summary = "Register a new user")
 	public RegisterResponse register(@Valid @RequestBody RegisterRequest request) {
 		return authService.register(request);
+	}
+	
+	@PostMapping("/login")
+	@Operation(summary = "Login")
+	public LoginResponse login(@Valid @RequestBody LoginRequest request) {
+		return authService.login(request);
 	}
 }
