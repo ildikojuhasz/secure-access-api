@@ -2,6 +2,7 @@ package com.example.secureaccessapi.service;
 
 import java.util.List;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,6 +13,7 @@ import com.example.secureaccessapi.entity.User;
 import com.example.secureaccessapi.exception.UserNotFoundException;
 import com.example.secureaccessapi.mapper.UserMapper;
 import com.example.secureaccessapi.repository.UserRepository;
+import com.example.secureaccessapi.specification.UserSpecification;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,10 +26,11 @@ public class AdminService {
 	
 	@Transactional(readOnly = true)
 	public UserListResponse searchUsers(String firstName, String lastName, String email) {
+		Specification<User> userSpec = Specification.<User>unrestricted().and(UserSpecification.matches(email, firstName, lastName));
+		List<User> userList = userRepository.findAll(userSpec);		
 		
-		List<User> users = userRepository.searchUsers(firstName, lastName, email);
-				
-		return new UserListResponse(users.stream().map(userMapper::toResponse).toList());
+		return new UserListResponse(userList.stream().map(userMapper::toResponse).toList());
+		
 	}
 	
 	@Transactional(readOnly = true)
